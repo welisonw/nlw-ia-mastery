@@ -1,0 +1,1 @@
+Em desenvolvimento NLW Mastery Upload AI - Rocketseat 👷‍♂️
