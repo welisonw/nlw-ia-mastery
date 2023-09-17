@@ -14,22 +14,28 @@ import { Slider } from "./components/ui/slider";
 import { VideoInputForm } from "./components/video-input-form";
 import { PromptSelect } from "./components/prompt-select";
 import { useState } from "react";
-import { useCompletion } from 'ai/react';
+import { useCompletion } from "ai/react";
 
 export function App() {
-  const [ temperature, setTemperature ] = useState(0.5);
-  const [ videoId, setVideoId ] = useState<string | null>(null);
+  const [temperature, setTemperature] = useState(0.5);
+  const [videoId, setVideoId] = useState<string | null>(null);
 
-
-
-
-
-  const { input, setInput, handleInputChange } = useCompletion({
-    api: 'http://localhost:3333/ai/complete',
+  const {
+    input,
+    setInput,
+    handleInputChange,
+    handleSubmit,
+    completion,
+    isLoading,
+  } = useCompletion({
+    api: "http://localhost:3333/ai/complete",
     body: {
       videoId,
       temperature,
     },
+    headers: {
+      'Content-type': 'application/json',
+    }
   });
 
   return (
@@ -63,8 +69,9 @@ export function App() {
 
             <Textarea
               placeholder="Resultado gerado pela IA..."
-              className="resize-none p-5 leading-relaxed"
               readOnly
+              value={completion}
+              className="resize-none p-5 leading-relaxed"
             />
           </div>
 
@@ -81,7 +88,7 @@ export function App() {
 
           <Separator />
 
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <Label>Prompt</Label>
 
@@ -115,7 +122,7 @@ export function App() {
                 max={1}
                 step={0.1}
                 value={[temperature]}
-                onValueChange={value => setTemperature(value[0])}
+                onValueChange={(value) => setTemperature(value[0])}
               />
 
               <span className="block text-xs text-muted-foreground italic leading-relaxed">
@@ -126,7 +133,7 @@ export function App() {
 
             <Separator />
 
-            <Button type="submit" className="w-full">
+            <Button disabled={isLoading} type="submit" className="w-full">
               Executar
               <Wand2 className="w-4 h-4 ml-2" />
             </Button>
