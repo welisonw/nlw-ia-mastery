@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { ChangeEvent, FormEvent, useMemo, useRef, useState } from "react";
 import { getFFmpeg } from "@/lib/ffmpeg";
 import { fetchFile } from '@ffmpeg/util';
+import { api } from "@/lib/axios";
 
 export function VideoInputForm() {
   const [ videoFile, setVideoFile ] = useState<File | null>(null);
@@ -73,9 +74,20 @@ export function VideoInputForm() {
 
 
 
-    const audioFIle = await convertVideoToAudio(videoFile);
+    const audioFile = await convertVideoToAudio(videoFile);
 
-    console.log(audioFIle);
+
+    const data = new FormData()
+
+    data.append('file', audioFile);
+
+    // upload
+    const response = await api.post('/videos', data);
+
+    const videoId = response.data.video.id;
+
+
+
   };
 
 
