@@ -87,7 +87,12 @@ export function VideoInputForm() {
     const videoId = response.data.video.id;
 
 
+    // gerar a transcrição do vídeo
+    await api.post(`videos/${videoId}/transcription`, {
+      prompt,
+    });
 
+    console.log('finalizou')
   };
 
 
