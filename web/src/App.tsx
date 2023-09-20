@@ -34,12 +34,12 @@ export function App() {
       temperature,
     },
     headers: {
-      'Content-type': 'application/json',
-    }
+      "Content-type": "application/json",
+    },
   });
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="h-{100} flex flex-col">
       <header className="px-6 py-3 flex items-center justify-between border-b ">
         <h1 className="text-xl font-bold">upload.ai</h1>
 
@@ -50,40 +50,20 @@ export function App() {
 
           <Separator orientation="vertical" className="h-6" />
 
-          <Button variant="default">
-            <Github className="w-4 h-4 mr-2" />
-            Github
-          </Button>
+          <a
+            href="https://github.com/welisonw/nlw13_2023-mastery-upload-ai"
+            target="_blank"
+          >
+            <Button variant="default">
+              <Github className="w-4 h-4 mr-2" />
+              Github
+            </Button>
+          </a>
         </div>
       </header>
 
       <main className="flex-1 p-6 flex gap-6">
-        <section className="flex flex-col flex-1 gap-4">
-          <div className="grid grid-rows-2 gap-4 flex-1">
-            <Textarea
-              placeholder="Inclua o prompt para a IA..."
-              value={input}
-              onChange={handleInputChange}
-              className="resize-none p-5 leading-relaxed"
-            />
-
-            <Textarea
-              placeholder="Resultado gerado pela IA..."
-              readOnly
-              value={completion}
-              className="resize-none p-5 leading-relaxed"
-            />
-          </div>
-
-          <p className="text-sm text-muted-foreground">
-            Lembre-se: você pode utilizar a variável{" "}
-            <code className="text-red-500">&#123;transcription&#125;</code> no
-            seu prompt para adicionar o conteúdo da transcrição do vídeo
-            selecionado.
-          </p>
-        </section>
-
-        <aside className="w-80 space-y-6">
+        <aside className="space-y-6">
           <VideoInputForm onVideoUploaded={setVideoId} />
 
           <Separator />
@@ -126,8 +106,8 @@ export function App() {
               />
 
               <span className="block text-xs text-muted-foreground italic leading-relaxed">
-                Você mais altos tendem a deixar o resultado mais criativo e com
-                possíveis erros.
+                Valores mais altos tendem a deixar o resultado mais criativo e
+                com possíveis erros.
               </span>
             </div>
 
@@ -139,7 +119,32 @@ export function App() {
             </Button>
           </form>
         </aside>
+
+        <section className="flex flex-col flex-1 gap-4">
+          <div className="grid grid-rows-2 gap-4 flex-1">
+            <Textarea
+              placeholder="Inclua o prompt para a IA..."
+              value={input}
+              onChange={handleInputChange}
+              className="resize-none p-5 leading-relaxed"
+            />
+
+            <Textarea
+              placeholder="Resultado gerado pela IA..."
+              readOnly
+              value={completion}
+              className="resize-none p-5 leading-relaxed"
+            />
+          </div>
+
+          <p className="text-sm text-muted-foreground">
+            Lembre-se: você pode utilizar a variável{" "}
+            <code className="text-red-500">&#123;transcription&#125;</code> no
+            seu prompt para adicionar o conteúdo da transcrição do vídeo
+            selecionado.
+          </p>
+        </section>
       </main>
     </div>
   );
-};
+}
